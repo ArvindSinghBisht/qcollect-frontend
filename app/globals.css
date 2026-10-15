@@ -1,0 +1,2393 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* respondent/live form css starts here */
+.respondent-shell{min-height:100vh;background:var(--accent);padding:40px 18px;color:#25232c;font-family:Arial,sans-serif}.respondent-card{max-width:720px;margin:auto;background:#fff;border:1px solid #e2dfe8;border-radius:12px;box-shadow:0 12px 40px #32285d17;overflow:hidden}.respondent-head{padding:28px 34px;border-top:5px solid var(--primary);border-bottom:1px solid #eeeaf2}.respondent-head h1{font-size:24px;margin:0 0 7px}.respondent-head p{margin:0;color:#777282}.respondent-progress{height:4px;background:var(--accent)}.respondent-progress i{display:block;height:100%;background:var(--primary);transition:.3s}.respondent-form{padding:28px 34px}.respondent-field{margin-bottom:24px}.respondent-field>label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}.respondent-field em{color:#dc4550}.respondent-field input,.respondent-field textarea,.respondent-field select{width:100%;border:1px solid #d9d5df;border-radius:7px;padding:11px 12px;background:#fff;color:#25232c}.respondent-field textarea{min-height:100px;resize:vertical}.respondent-field small{display:block;color:#777282;margin-top:6px}.respondent-rating{display:flex;gap:8px}.respondent-rating button{width:45px;height:42px;border:1px solid #d9d5df;background:#fff;border-radius:7px;color:#bbb;font-size:20px}.respondent-rating button.active{color:#ffad16;border-color:#ffad16;background:#fff8e8}.capture-box{border:1px dashed #ccc5db;border-radius:8px;padding:16px;background:var(--accent)}.capture-box button,.capture-file{display:inline-block;border:0;border-radius:6px;padding:10px 14px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer}.capture-file input{display:none}.capture-value{margin-top:12px;padding:10px;border-radius:6px;background:var(--accent);color:var(--primary);font-family:Consolas,monospace}.capture-preview{display:flex;gap:12px;align-items:center;margin-top:12px}.capture-preview img{width:110px;height:80px;object-fit:cover;border-radius:6px}.form-error{padding:10px 12px;background:#fff0f1;color:#bd2936;border-radius:6px;margin-bottom:14px}.respondent-actions{display:flex;justify-content:space-between;border-top:1px solid #eeeaf2;padding-top:18px}.respondent-actions button{border:1px solid #d9d5df;background:#fff;border-radius:7px;padding:10px 18px;font-weight:700}.respondent-actions .primary{background:var(--primary);color:#fff;border-color:var(--primary)}.success-card{text-align:center;padding:64px 34px}.success-card b{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 18px;border-radius:50%;background:#e8f7ef;color:#238255;font-size:28px}.success-card h1{font-size:24px}.success-card p{color:#777282}.submissions-shell{min-height:100vh;background:#f5f4f8;padding:28px;color:#282631;font-family:Arial,sans-serif}.submissions-main{max-width:1100px;margin:auto}.submissions-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.submissions-top h1{margin:0 0 5px}.submissions-top p{margin:0;color:#777282}.submissions-top a{background:var(--primary);color:#fff;padding:10px 15px;border-radius:7px;text-decoration:none;font-weight:700}.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.metric{background:#fff;border:1px solid #e4e1e8;border-radius:9px;padding:17px}.metric b{font-size:26px;display:block}.metric span{color:#777282}.submission-grid{display:grid;grid-template-columns:1fr 360px;background:#fff;border:1px solid #e4e1e8;border-radius:10px;min-height:460px;overflow:hidden}.submission-list{border-right:1px solid #e4e1e8}.submission-search{padding:13px;border-bottom:1px solid #e4e1e8}.submission-search input{width:100%;padding:9px;border:1px solid #ddd8e2;border-radius:6px}.submission-row{width:100%;border:0;border-bottom:1px solid #eeebf1;background:#fff;text-align:left;padding:14px;display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center}.submission-row.active{background:var(--accent)}.submission-row i{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--primary);display:grid;place-items:center;font-style:normal;font-weight:700}.submission-row b,.submission-row span{display:block}.submission-row small{color:#777282}.status-pill{font-size:10px!important;color:#258154!important;background:#e8f7ef;padding:4px 7px;border-radius:10px}.submission-detail{padding:22px}.submission-detail h2{margin-top:0}.answer{border-top:1px solid #ece9ef;padding:12px 0}.answer span{display:block;color:#777282;font-size:11px;margin-bottom:4px}.answer b{word-break:break-word}@media(max-width:760px){.respondent-shell{padding:0}.respondent-card{border-radius:0;min-height:100vh}.respondent-form,.respondent-head{padding:22px}.metric-row{grid-template-columns:1fr}.submission-grid{grid-template-columns:1fr}.submission-detail{display:none}.submission-list{border:0}.submissions-shell{padding:16px}}
+
+
+.respondent-actions{display:flex;justify-content:space-between;gap:10px;margin-top:22px}.respondent-actions button{border:1px solid #d9d5df;background:#fff;border-radius:7px;padding:10px 16px;font-weight:700}.respondent-actions .primary{background:var(--primary);color:#fff;border-color:var(--primary)}.respondent-options{display:grid;gap:8px}.respondent-options label{display:flex!important;align-items:center;gap:8px;font-weight:500!important}.respondent-divider{border:0;border-top:1px solid #e2dfe8;margin:22px 0}.respondent-heading h2{font-size:20px;margin:0 0 6px}
+
+/* ================================
+   QCollect Survey Builder UI Polish
+   ================================ */
+
+   .survey-app {
+    --builder-purple: var(--primary);
+    --builder-purple-dark: var(--primary);
+    --builder-soft: var(--accent);
+    --builder-border: #e5e7eb;
+    --builder-text: #111827;
+    --builder-muted: #64748b;
+    background: #f3f6fb;
+    min-height: 100vh;
+  }
+  
+  .survey-app .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    min-height: 64px;
+    padding: 10px 24px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--builder-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .survey-app .builder-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 280px;
+  }
+  
+  .survey-app .builder-title > div {
+    display: grid;
+    gap: 2px;
+  }
+  
+  .survey-app .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--builder-purple);
+    font-weight: 800;
+  }
+  
+  .survey-app .formname-input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 18px;
+    font-weight: 850;
+    color: var(--builder-text);
+    min-width: 220px;
+  }
+  
+  .survey-app .badge {
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--builder-soft);
+    color: var(--builder-purple-dark);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  
+  .survey-app .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .survey-app .top-actions a,
+  .survey-app .top-actions button,
+  .survey-app .toolbar button,
+  .survey-app .viewtools button {
+    border: 1px solid var(--builder-border);
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 9px 13px;
+    font-weight: 800;
+    font-size: 13px;
+    color: #111827;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .survey-app .top-actions .publish,
+  .survey-app .publish {
+    background: var(--builder-purple);
+    color: #ffffff;
+    border-color: var(--builder-purple);
+  }
+  
+  .survey-app .top-actions .save,
+  .survey-app .save {
+    background: var(--accent);
+    color: var(--builder-purple-dark);
+    border-color: var(--border);
+  }
+  
+  .survey-app .top-actions .preview {
+    background: #111827;
+    color: #ffffff;
+    border-color: #111827;
+  }
+  
+  .survey-app .saved {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #059669;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .survey-app .saved i {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #10b981;
+  }
+  
+  .survey-app .toolbar {
+    position: sticky;
+    top: 64px;
+    z-index: 35;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--builder-border);
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .survey-app .viewtools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .survey-app .viewtools button.active {
+    background: var(--builder-soft);
+    color: var(--builder-purple-dark);
+    border-color: var(--border);
+  }
+  
+  .survey-app .zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--builder-border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 3px;
+  }
+  
+  .survey-app .zoom button {
+    padding: 5px 9px;
+    border: 0;
+  }
+  
+  .survey-app .workspace {
+    display: grid;
+    grid-template-columns: 280px 160px minmax(680px, 1fr) 340px;
+    gap: 0;
+    align-items: start;
+    min-height: calc(100vh - 112px);
+  }
+  
+  .survey-app .left,
+  .survey-app .right,
+  .survey-app .page-rail {
+    position: sticky;
+    top: 112px;
+    height: calc(100vh - 112px);
+    overflow: auto;
+    background: #ffffff;
+    border-right: 1px solid var(--builder-border);
+  }
+  
+  .survey-app .right {
+    border-left: 1px solid var(--builder-border);
+    border-right: 0;
+  }
+  
+  .survey-app .palette {
+    padding: 16px;
+  }
+  
+  .survey-app .palette-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .survey-app .palette-head b {
+    font-size: 15px;
+    color: var(--builder-text);
+  }
+  
+  .survey-app .palette-head span {
+    font-size: 12px;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app .search {
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--builder-border);
+    border-radius: 12px;
+    padding: 0 12px;
+    outline: 0;
+    margin-bottom: 12px;
+    background: #f8fafc;
+  }
+  
+  .survey-app .palette-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .survey-app .palette-tabs button {
+    border: 1px solid var(--builder-border);
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 7px 10px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app .palette-tabs button.active {
+    background: var(--builder-purple);
+    color: #ffffff;
+    border-color: var(--builder-purple);
+  }
+  
+  .survey-app .component-list {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .survey-app .component-card {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--builder-border);
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    cursor: grab;
+    transition: 0.16s ease;
+  }
+  
+  .survey-app .component-card:hover {
+    border-color: var(--border);
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(23, 102, 91, 0.12);
+  }
+  
+  .survey-app .component-card i {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: var(--builder-soft);
+    color: var(--builder-purple);
+    font-style: normal;
+    font-weight: 900;
+  }
+  
+  .survey-app .component-card b {
+    display: block;
+    font-size: 13px;
+    color: var(--builder-text);
+  }
+  
+  .survey-app .component-card span {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app .page-rail {
+    padding: 16px 12px;
+  }
+  
+  .survey-app .rail-title,
+  .survey-app .add-page,
+  .survey-app .page-rail > button {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+  }
+  
+  .survey-app .page-rail button.active {
+    background: var(--builder-soft);
+    color: var(--builder-purple-dark);
+    border-radius: 14px;
+  }
+  
+  .survey-app .canvas-wrap {
+    min-width: 0;
+    background: #eef2f7;
+  }
+  
+  .survey-app .canvas-head {
+    position: sticky;
+    top: 112px;
+    z-index: 20;
+    height: 44px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--builder-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    color: var(--builder-muted);
+    font-size: 13px;
+  }
+  
+  .survey-app .device-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .survey-app .device-switcher button {
+    border: 1px solid var(--builder-border);
+    background: #ffffff;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  
+  .survey-app .device-switcher button.active {
+    background: #111827;
+    color: #ffffff;
+    border-color: #111827;
+  }
+  
+  .survey-app .canvas-scroll {
+    padding: 28px;
+    overflow: auto;
+  }
+  
+  .survey-app .canvas {
+    margin: 0 auto;
+    min-height: 760px;
+    transition: width 0.2s ease, transform 0.2s ease;
+  }
+  
+  .survey-app .canvas.show-grid {
+    background-image: radial-gradient(var(--border) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  
+  .survey-app .canvas.show-guides::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed rgba(23, 102, 91, 0.3);
+    pointer-events: none;
+  }
+  
+  .survey-app .page-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid var(--builder-border);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+  }
+  
+  .survey-app .form-head {
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--builder-border);
+  }
+  
+  .survey-app .fields {
+    padding: 28px;
+    display: grid;
+    gap: 18px;
+  }
+  
+  .survey-app .field {
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    padding: 14px;
+    background: #ffffff;
+  }
+  
+  .survey-app .field:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  
+  .survey-app .field.selected {
+    border-color: var(--builder-purple);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(23, 102, 91, 0.08);
+  }
+  
+  .survey-app .field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 850;
+    color: var(--builder-text);
+    margin-bottom: 8px;
+  }
+  
+  .survey-app .field small {
+    display: block;
+    margin-top: 6px;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app input,
+  .survey-app textarea,
+  .survey-app select,
+  .survey-app .fake-input {
+    border: 1px solid var(--builder-border);
+    border-radius: 12px;
+    background: #ffffff;
+    min-height: 40px;
+    padding: 10px 12px;
+    outline: 0;
+  }
+  
+  .survey-app input:focus,
+  .survey-app textarea:focus,
+  .survey-app select:focus {
+    border-color: var(--builder-purple);
+    box-shadow: 0 0 0 4px rgba(23, 102, 91, 0.08);
+  }
+  
+  .survey-app .right-tabs,
+  .survey-app .property-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: #ffffff;
+    display: flex;
+    border-bottom: 1px solid var(--builder-border);
+  }
+  
+  .survey-app .right-tabs button,
+  .survey-app .property-tabs button {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 13px 10px;
+    font-weight: 850;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app .right-tabs button.active,
+  .survey-app .property-tabs button.active {
+    color: var(--builder-purple);
+    border-bottom: 3px solid var(--builder-purple);
+  }
+  
+  .survey-app .selection {
+    display: grid;
+    grid-template-columns: 40px 1fr 32px 32px;
+    gap: 10px;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid var(--builder-border);
+  }
+  
+  .survey-app .selection i {
+    width: 40px;
+    height: 40px;
+    border-radius: 14px;
+    background: var(--builder-soft);
+    display: grid;
+    place-items: center;
+    color: var(--builder-purple);
+    font-style: normal;
+    font-weight: 900;
+  }
+  
+  .survey-app .selection b {
+    display: block;
+    font-size: 13px;
+  }
+  
+  .survey-app .selection span {
+    font-size: 12px;
+    color: var(--builder-muted);
+  }
+  
+  .survey-app .props {
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+  }
+  
+  .survey-app .props label {
+    display: grid;
+    gap: 7px;
+    font-weight: 850;
+    font-size: 13px;
+  }
+  
+  .survey-app .props .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .survey-app .switchrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px;
+    border: 1px solid var(--builder-border);
+    border-radius: 14px;
+    background: #f8fafc;
+  }
+  
+  .survey-app .switchrow b {
+    display: block;
+    font-size: 13px;
+  }
+  
+  .survey-app .switchrow span {
+    display: block;
+    margin-top: 2px;
+    color: var(--builder-muted);
+    font-size: 11px;
+  }
+  
+  .survey-app .switch {
+    width: 42px;
+    height: 24px;
+    border: 0;
+    border-radius: 999px;
+    background: #cbd5e1;
+    padding: 3px;
+  }
+  
+  .survey-app .switch i {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 999px;
+    transition: 0.2s ease;
+  }
+  
+  .survey-app .switch.on {
+    background: var(--builder-purple);
+  }
+  
+  .survey-app .switch.on i {
+    transform: translateX(18px);
+  }
+  
+  .survey-app .option-editor {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .survey-app .option-editor-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .survey-app .option-editor-head button {
+    border: 1px solid var(--border);
+    background: var(--builder-soft);
+    color: var(--builder-purple-dark);
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-weight: 850;
+  }
+  
+  .survey-app .option-list {
+    display: grid;
+    gap: 8px;
+  }
+  
+  .survey-app .option-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 32px;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .survey-app .option-row span {
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: var(--builder-soft);
+    color: var(--builder-purple-dark);
+    font-size: 12px;
+    font-weight: 900;
+  }
+  
+  .survey-app .option-row button {
+    height: 32px;
+    border: 0;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 900;
+  }
+  
+  .survey-app .bottom {
+    display: none !important;
+  }
+  
+  @media (max-width: 1200px) {
+    .survey-app .workspace {
+      grid-template-columns: 260px 140px minmax(600px, 1fr) 320px;
+    }
+  }
+
+  /* ================================
+   Survey Field Rendering Polish
+   ================================ */
+
+.survey-app .field-control {
+  width: 100%;
+  display: block;
+}
+
+.survey-app select.field-control {
+  appearance: auto;
+  cursor: pointer;
+}
+
+.survey-app input:disabled,
+.survey-app select:disabled,
+.survey-app textarea:disabled {
+  background: #f8fafc;
+  color: #64748b;
+  cursor: default;
+  opacity: 1;
+}
+
+.survey-app .choice-list {
+  display: grid;
+  gap: 10px;
+}
+
+.survey-app .choice-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--builder-border, #e5e7eb);
+  border-radius: 12px;
+  background: #f8fafc;
+  font-weight: 750;
+  color: #334155;
+}
+
+.survey-app .choice-option:hover {
+  border-color: var(--border);
+  background: var(--accent);
+}
+
+.survey-app .choice-option input {
+  width: 16px;
+  height: 16px;
+  min-height: auto;
+  padding: 0;
+  accent-color: var(--builder-purple, var(--primary));
+}
+
+.survey-app .choice-option span {
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.survey-app .money-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--builder-border, #e5e7eb);
+  border-radius: 12px;
+  background: #ffffff;
+  min-height: 42px;
+  padding: 0 12px;
+}
+
+.survey-app .money-control span {
+  font-weight: 850;
+  color: #475569;
+}
+
+.survey-app .money-control input {
+  flex: 1;
+  min-height: 38px;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.survey-app .money-control:focus-within {
+  border-color: var(--builder-purple, var(--primary));
+  box-shadow: 0 0 0 4px rgba(23, 102, 91, 0.08);
+}
+
+.survey-app .rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.survey-app .rating button {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid var(--builder-border, #e5e7eb);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--builder-purple, var(--primary));
+  font-weight: 900;
+}
+
+.survey-app .rating button:hover:not(:disabled),
+.survey-app .rating button.active {
+  background: var(--builder-purple, var(--primary));
+  color: #ffffff;
+  border-color: var(--builder-purple, var(--primary));
+}
+
+.survey-app .rating-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.survey-app .floating {
+  position: absolute;
+  right: 10px;
+  top: -22px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--builder-purple, var(--primary));
+  box-shadow: 0 12px 22px rgba(23, 102, 91, 0.25);
+  z-index: 5;
+}
+
+.survey-app .floating button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.survey-app .floating button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.survey-app .drag-handle {
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--builder-purple, var(--primary));
+  font-weight: 900;
+  opacity: 0;
+  transition: 0.15s ease;
+}
+
+.survey-app .field:hover .drag-handle,
+.survey-app .field.selected .drag-handle {
+  opacity: 1;
+}
+
+.survey-app .geo-capture,
+.survey-app .photo-capture {
+  border: 1px solid var(--builder-border, #e5e7eb);
+  border-radius: 16px;
+  background: #f8fafc;
+  padding: 14px;
+}
+
+.survey-app .geo-capture {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.survey-app .geo-pulse {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--builder-purple, var(--primary));
+  font-weight: 900;
+}
+
+.survey-app .geo-result b,
+.survey-app .geotag b {
+  display: block;
+  font-size: 13px;
+  color: #111827;
+}
+
+.survey-app .geo-result span,
+.survey-app .geotag span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.survey-app .geo-capture button,
+.survey-app .camera-button {
+  border: 0;
+  border-radius: 12px;
+  background: var(--builder-purple, var(--primary));
+  color: #ffffff;
+  padding: 10px 14px;
+  font-weight: 850;
+  cursor: pointer;
+  text-align: center;
+}
+
+.survey-app .camera-button input {
+  display: none;
+}
+
+.survey-app .photo-placeholder {
+  min-height: 140px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.survey-app .photo-capture img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.survey-app .capture-error {
+  color: #dc2626 !important;
+  font-weight: 800;
+}
+
+/* ================================
+   Survey Builder Layout Tightening
+   ================================ */
+
+   .survey-app {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #eef2f7;
+  }
+  
+  /* Make builder start immediately, no large empty vertical gap */
+  .survey-app .topbar {
+    min-height: 56px;
+    padding: 8px 18px;
+  }
+  
+  /* Reduce toolbar height */
+  .survey-app .toolbar {
+    min-height: 42px;
+    padding: 6px 18px;
+  }
+  
+  /* Make full builder layout more compact */
+  .survey-app .workspace {
+    grid-template-columns: 300px 150px minmax(720px, 1fr) 340px;
+    min-height: calc(100vh - 98px);
+  }
+  
+  /* Sticky side panels after compact topbar + toolbar */
+  .survey-app .left,
+  .survey-app .right,
+  .survey-app .page-rail {
+    top: 98px;
+    height: calc(100vh - 98px);
+  }
+  
+  /* Canvas header sticky aligned with compact toolbar */
+  .survey-app .canvas-head {
+    top: 98px;
+    height: 40px;
+  }
+  
+  /* Reduce excessive canvas padding */
+  .survey-app .canvas-scroll {
+    padding: 18px 22px 80px;
+  }
+  
+  /* Make the form card wider and better centred */
+  .survey-app .canvas {
+    max-width: 100%;
+  }
+  
+  /* Better page card spacing */
+  .survey-app .page-card {
+    border-radius: 18px;
+  }
+  
+  /* Less wasted space in form header */
+  .survey-app .form-head {
+    padding: 18px 24px;
+  }
+  
+  /* Reduce large gaps between fields */
+  .survey-app .fields {
+    padding: 24px;
+    gap: 12px;
+  }
+  
+  /* Keep selected field clean */
+  .survey-app .field {
+    padding: 12px;
+  }
+  
+  /* Make bottom footer cleaner */
+  .survey-app .form-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+  
+  /* Hide unused bottom JSON panel fully */
+  .survey-app .bottom,
+  .survey-app .bottom.closed {
+    display: none !important;
+  }
+  
+  /* Since bottom panel is hidden, canvas should get full height */
+  .survey-app .canvas-wrap {
+    min-height: calc(100vh - 98px);
+  }
+
+  /* ================================
+   Better Component Library UI
+   ================================ */
+
+.survey-app .left {
+  background: var(--accent);
+}
+
+.survey-app .palette {
+  padding: 14px;
+}
+
+.survey-app .palette-head {
+  padding: 10px 10px 4px;
+}
+
+.survey-app .palette-head b {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.survey-app .palette-head span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.survey-app .component-list {
+  gap: 8px;
+  padding-bottom: 24px;
+}
+
+/* This is what fixes the “plain text” component look */
+.survey-app .component-card {
+  display: grid !important;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+  cursor: grab;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.survey-app .component-card:hover {
+  border-color: var(--border);
+  background: var(--accent);
+  box-shadow: 0 10px 24px rgba(23, 102, 91, 0.12);
+}
+
+.survey-app .component-card i {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.survey-app .component-card b {
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.survey-app .component-card span {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: #64748b;
+}
+
+.survey-app .palette-tabs {
+  padding: 0 8px 8px;
+}
+
+.survey-app .palette-tabs button {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.survey-app .search {
+  margin: 8px 8px 12px;
+  width: calc(100% - 16px);
+}
+
+/* ================================
+   Pages Panel Polish
+   ================================ */
+
+   .survey-app .page-rail {
+    background: #ffffff;
+    padding: 14px 10px;
+  }
+  
+  .survey-app .rail-title {
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 12px;
+    font-weight: 900;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .survey-app .page-rail > button {
+    margin-bottom: 8px;
+  }
+  
+  .survey-app .page-rail button {
+    cursor: pointer;
+  }
+  
+  .survey-app .page-rail button.active {
+    background: var(--accent);
+    color: var(--primary);
+  }
+  
+  .survey-app .page-rail button span {
+    display: grid;
+    gap: 2px;
+  }
+  
+  .survey-app .page-rail button small {
+    font-size: 10px;
+    color: #64748b;
+  }
+  
+  .survey-app .add-page {
+    margin-top: 10px;
+    padding: 9px 10px;
+    border-radius: 12px !important;
+    color: var(--primary);
+    font-weight: 850;
+    background: var(--accent) !important;
+  }
+
+  /* ================================
+   Properties Panel Polish
+   ================================ */
+
+.survey-app .right {
+  background: #ffffff;
+}
+
+.survey-app .right-tabs {
+  height: 44px;
+}
+
+.survey-app .right-tabs button {
+  font-size: 13px;
+}
+
+.survey-app .selection {
+  position: sticky;
+  top: 44px;
+  z-index: 4;
+  background: #ffffff;
+}
+
+.survey-app .property-tabs {
+  position: sticky;
+  top: 116px;
+  z-index: 4;
+  background: #ffffff;
+}
+
+.survey-app .props {
+  padding: 16px;
+  padding-bottom: 80px;
+}
+
+.survey-app .props input,
+.survey-app .props textarea,
+.survey-app .props select {
+  width: 100%;
+}
+
+.survey-app .props textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.survey-app .props label {
+  font-size: 12px;
+  color: #0f172a;
+}
+
+.survey-app .props small {
+  color: #64748b;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* ================================
+   Canvas Modern Polish
+   ================================ */
+
+   .survey-app .canvas-wrap {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.6), rgba(238,242,247,0.9)),
+      #eef2f7;
+  }
+  
+  .survey-app .canvas-head {
+    padding: 0 14px;
+    font-size: 12px;
+  }
+  
+  .survey-app .canvas-head > span {
+    font-weight: 750;
+  }
+  
+  .survey-app .page-card {
+    box-shadow:
+      0 24px 70px rgba(15, 23, 42, 0.10),
+      0 0 0 1px rgba(226, 232, 240, 0.8);
+  }
+  
+  .survey-app .mini-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--primary);
+    color: white;
+    font-weight: 900;
+  }
+  
+  .survey-app .form-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .survey-app .form-head h1 {
+    font-size: 18px;
+    margin: 0;
+    color: #111827;
+  }
+  
+  .survey-app .form-head p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #64748b;
+  }
+  
+  .survey-app .empty {
+    min-height: 220px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: #64748b;
+    background: #f8fafc;
+  }
+  
+  .survey-app .empty b {
+    display: block;
+    color: #0f172a;
+    margin-top: 8px;
+  }
+  
+  .survey-app .empty span {
+    display: block;
+    font-size: 12px;
+  }
+
+  /* ================================
+   Preview and Device Control Polish
+   ================================ */
+
+.survey-app .device-switcher {
+  min-height: 32px;
+}
+
+.survey-app .device-switcher button {
+  min-width: 76px;
+  height: 30px;
+  padding: 0 12px;
+}
+
+.survey-app .device-switcher button.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.survey-app .top-actions button:hover,
+.survey-app .top-actions a:hover,
+.survey-app .toolbar button:hover,
+.survey-app .viewtools button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+.survey-app .top-actions button,
+.survey-app .top-actions a,
+.survey-app .toolbar button,
+.survey-app .viewtools button {
+  transition: 0.15s ease;
+}
+
+/* =========================================================
+   QCollect Survey Builder Final Override
+   Keep this block LAST in globals.css
+   ========================================================= */
+
+   .survey-app,
+   .survey-app * {
+     font-family:
+       Inter,
+       ui-sans-serif,
+       system-ui,
+       -apple-system,
+       BlinkMacSystemFont,
+       "Segoe UI",
+       Roboto,
+       Arial,
+       sans-serif !important;
+   }
+   
+   .survey-app {
+     display: block !important;
+     height: auto !important;
+     min-height: 100vh !important;
+     grid-template-rows: none !important;
+     font-size: 14px !important;
+     background: #eef2f7 !important;
+     color: #0f172a !important;
+   }
+   
+   /* Top builder header */
+   .survey-app .topbar {
+     position: sticky !important;
+     top: 0 !important;
+     z-index: 60 !important;
+     min-height: 58px !important;
+     padding: 8px 18px !important;
+     background: rgba(255, 255, 255, 0.96) !important;
+     backdrop-filter: blur(14px) !important;
+     border-bottom: 1px solid #e5e7eb !important;
+   }
+   
+   .survey-app .builder-title {
+     display: flex !important;
+     align-items: center !important;
+     gap: 14px !important;
+   }
+   
+   .survey-app .eyebrow {
+     display: block !important;
+     font-size: 10px !important;
+     letter-spacing: 0.14em !important;
+     text-transform: uppercase !important;
+     color: var(--primary) !important;
+     font-weight: 900 !important;
+   }
+   
+   .survey-app .formname-input {
+     font-size: 18px !important;
+     font-weight: 900 !important;
+     color: #111827 !important;
+     background: transparent !important;
+     border: 0 !important;
+     outline: 0 !important;
+   }
+   
+   /* Toolbar */
+   .survey-app .toolbar {
+     position: sticky !important;
+     top: 58px !important;
+     z-index: 55 !important;
+     height: 42px !important;
+     min-height: 42px !important;
+     padding: 6px 18px !important;
+     padding-left: 18px !important;
+     background: rgba(255, 255, 255, 0.96) !important;
+     border-bottom: 1px solid #e5e7eb !important;
+   }
+   
+   .survey-app .toolset,
+   .survey-app .viewtools {
+     display: flex !important;
+     align-items: center !important;
+     gap: 8px !important;
+   }
+   
+   .survey-app .toolbar button,
+   .survey-app .viewtools button,
+   .survey-app .top-actions button,
+   .survey-app .top-actions a {
+     height: 34px !important;
+     border: 1px solid #e5e7eb !important;
+     border-radius: 10px !important;
+     background: #ffffff !important;
+     color: #111827 !important;
+     padding: 0 12px !important;
+     font-size: 13px !important;
+     font-weight: 800 !important;
+     text-decoration: none !important;
+     display: inline-flex !important;
+     align-items: center !important;
+     justify-content: center !important;
+     cursor: pointer !important;
+   }
+   
+   .survey-app .top-actions .publish,
+   .survey-app .publish {
+     background: var(--primary) !important;
+     color: #ffffff !important;
+     border-color: var(--primary) !important;
+   }
+   
+   .survey-app .top-actions .save,
+   .survey-app .save {
+     background: var(--accent) !important;
+     color: var(--primary) !important;
+     border-color: var(--border) !important;
+   }
+   
+   .survey-app .top-actions .preview {
+     background: #111827 !important;
+     color: #ffffff !important;
+     border-color: #111827 !important;
+   }
+   
+   /* Main layout */
+   .survey-app .workspace {
+     display: grid !important;
+     grid-template-columns: 300px 150px minmax(720px, 1fr) 340px !important;
+     min-height: calc(100vh - 100px) !important;
+     align-items: start !important;
+     background: #eef2f7 !important;
+   }
+   
+   .survey-app .left,
+   .survey-app .page-rail,
+   .survey-app .right {
+     position: sticky !important;
+     top: 100px !important;
+     height: calc(100vh - 100px) !important;
+     overflow: auto !important;
+     background: #ffffff !important;
+     border-color: #e5e7eb !important;
+   }
+   
+   /* Component library */
+   .survey-app .palette {
+     padding: 14px !important;
+   }
+   
+   .survey-app .palette-head {
+     display: flex !important;
+     align-items: flex-start !important;
+     justify-content: space-between !important;
+     gap: 10px !important;
+     margin-bottom: 12px !important;
+   }
+   
+   .survey-app .palette-head b {
+     font-size: 16px !important;
+     font-weight: 900 !important;
+     color: #111827 !important;
+   }
+   
+   .survey-app .palette-head span {
+     font-size: 12px !important;
+     color: #64748b !important;
+   }
+   
+   .survey-app input.search,
+   .survey-app .search {
+     display: block !important;
+     width: 100% !important;
+     height: 40px !important;
+     margin: 0 0 12px 0 !important;
+     border: 1px solid #e5e7eb !important;
+     border-radius: 12px !important;
+     background: #f8fafc !important;
+     padding: 0 12px !important;
+     font-size: 13px !important;
+     color: #111827 !important;
+   }
+   
+   .survey-app .palette-tabs {
+     display: flex !important;
+     flex-wrap: wrap !important;
+     gap: 6px !important;
+     margin: 0 0 12px 0 !important;
+     padding: 0 !important;
+   }
+   
+   .survey-app .palette-tabs button {
+     flex: 0 0 auto !important;
+     height: 28px !important;
+     border: 1px solid #e5e7eb !important;
+     border-radius: 999px !important;
+     background: #ffffff !important;
+     color: #64748b !important;
+     padding: 0 10px !important;
+     font-size: 11px !important;
+     font-weight: 900 !important;
+   }
+   
+   .survey-app .palette-tabs button.active {
+     background: var(--primary) !important;
+     color: #ffffff !important;
+     border-color: var(--primary) !important;
+   }
+   
+   .survey-app .component-list {
+     display: grid !important;
+     gap: 9px !important;
+     padding-bottom: 30px !important;
+   }
+   
+   .survey-app .component-card {
+     display: grid !important;
+     grid-template-columns: 38px minmax(0, 1fr) !important;
+     align-items: center !important;
+     gap: 10px !important;
+     width: 100% !important;
+     min-height: 64px !important;
+     padding: 11px !important;
+     border: 1px solid #e5e7eb !important;
+     border-radius: 15px !important;
+     background: #ffffff !important;
+     box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05) !important;
+     cursor: grab !important;
+   }
+   
+   .survey-app .component-card:hover {
+     border-color: var(--border) !important;
+     background: var(--accent) !important;
+     box-shadow: 0 12px 28px rgba(23, 102, 91, 0.14) !important;
+     transform: translateY(-1px) !important;
+   }
+   
+   .survey-app .component-card i {
+     width: 38px !important;
+     height: 38px !important;
+     border-radius: 13px !important;
+     display: grid !important;
+     place-items: center !important;
+     background: var(--accent) !important;
+     color: var(--primary) !important;
+     font-style: normal !important;
+     font-size: 14px !important;
+     font-weight: 950 !important;
+   }
+   
+   .survey-app .component-card div {
+     min-width: 0 !important;
+   }
+   
+   .survey-app .component-card b {
+     display: block !important;
+     font-size: 13px !important;
+     line-height: 1.2 !important;
+     color: #0f172a !important;
+     font-weight: 900 !important;
+   }
+   
+   .survey-app .component-card span {
+     display: block !important;
+     margin-top: 3px !important;
+     font-size: 11px !important;
+     line-height: 1.35 !important;
+     color: #64748b !important;
+   }
+   
+   /* Pages panel */
+   .survey-app .page-rail {
+     padding: 14px 10px !important;
+   }
+   
+   .survey-app .rail-title {
+     height: 36px !important;
+     padding: 0 10px !important;
+     border-radius: 12px !important;
+     font-size: 13px !important;
+     font-weight: 900 !important;
+     color: #111827 !important;
+     display: flex !important;
+     align-items: center !important;
+     justify-content: space-between !important;
+   }
+   
+   .survey-app .page-rail > button:not(.rail-title) {
+     width: 100% !important;
+     margin: 0 0 8px 0 !important;
+     padding: 9px 8px !important;
+     border-radius: 12px !important;
+     border: 0 !important;
+     background: transparent !important;
+     color: #111827 !important;
+   }
+   
+   .survey-app .page-rail > button.active {
+     background: var(--accent) !important;
+     color: var(--primary) !important;
+   }
+   
+   .survey-app .add-page {
+     background: var(--accent) !important;
+     color: var(--primary) !important;
+     font-weight: 900 !important;
+   }
+   
+   /* Canvas */
+   .survey-app .canvas-wrap {
+     min-width: 0 !important;
+     min-height: calc(100vh - 100px) !important;
+     background:
+       linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(238, 242, 247, 0.92)),
+       #eef2f7 !important;
+   }
+   
+   .survey-app .canvas-head {
+     position: sticky !important;
+     top: 100px !important;
+     z-index: 30 !important;
+     height: 40px !important;
+     background: #ffffff !important;
+     border-bottom: 1px solid #e5e7eb !important;
+     color: #64748b !important;
+     padding: 0 14px !important;
+     font-size: 12px !important;
+   }
+   
+   .survey-app .canvas-scroll {
+     padding: 20px 24px 80px !important;
+     overflow: auto !important;
+   }
+   
+   .survey-app .canvas {
+     position: relative !important;
+     margin: 0 auto !important;
+     min-height: 760px !important;
+   }
+   
+   .survey-app .canvas.show-grid {
+     background-image: radial-gradient(var(--border) 1px, transparent 1px) !important;
+     background-size: 18px 18px !important;
+   }
+   
+   .survey-app .canvas.show-guides::before {
+     content: "" !important;
+     position: absolute !important;
+     left: 50% !important;
+     top: 0 !important;
+     bottom: 0 !important;
+     border-left: 1px dashed rgba(23, 102, 91, 0.35) !important;
+     pointer-events: none !important;
+   }
+   
+   .survey-app .page-card {
+     background: #ffffff !important;
+     border: 1px solid #e5e7eb !important;
+     border-radius: 18px !important;
+     box-shadow:
+       0 24px 70px rgba(15, 23, 42, 0.10),
+       0 0 0 1px rgba(226, 232, 240, 0.8) !important;
+     overflow: hidden !important;
+   }
+   
+   .survey-app .form-head {
+     padding: 18px 24px !important;
+     border-bottom: 1px solid #e5e7eb !important;
+     display: flex !important;
+     align-items: center !important;
+     gap: 12px !important;
+   }
+   
+   .survey-app .fields {
+     display: grid !important;
+     grid-template-columns: 1fr !important;
+     gap: 12px !important;
+     padding: 24px !important;
+   }
+   
+   .survey-app .field {
+     width: 100% !important;
+     position: relative !important;
+     padding: 12px !important;
+     border: 1px solid transparent !important;
+     border-radius: 16px !important;
+     background: #ffffff !important;
+   }
+   
+   .survey-app .field:hover {
+     background: var(--accent) !important;
+     border-color: var(--accent) !important;
+   }
+   
+   .survey-app .field.selected {
+     border-color: var(--primary) !important;
+     background: var(--accent) !important;
+     box-shadow: 0 0 0 4px rgba(23, 102, 91, 0.08) !important;
+   }
+   
+   .survey-app .form-footer {
+     padding: 16px 24px !important;
+     border-top: 1px solid #e5e7eb !important;
+     background: #ffffff !important;
+   }
+   
+   /* Right properties */
+   .survey-app .right {
+     border-left: 1px solid #e5e7eb !important;
+     border-right: 0 !important;
+   }
+   
+   .survey-app .right-tabs {
+     position: sticky !important;
+     top: 0 !important;
+     z-index: 10 !important;
+     height: 44px !important;
+     background: #ffffff !important;
+     border-bottom: 1px solid #e5e7eb !important;
+   }
+   
+   .survey-app .selection {
+     position: sticky !important;
+     top: 44px !important;
+     z-index: 9 !important;
+     background: #ffffff !important;
+     border-bottom: 1px solid #e5e7eb !important;
+   }
+   
+   .survey-app .property-tabs {
+     position: sticky !important;
+     top: 116px !important;
+     z-index: 8 !important;
+     background: #ffffff !important;
+     border-bottom: 1px solid #e5e7eb !important;
+   }
+   
+   .survey-app .props {
+     padding: 16px !important;
+     padding-bottom: 90px !important;
+   }
+   
+   /* Device switcher */
+   .survey-app .device-switcher {
+     display: flex !important;
+     align-items: center !important;
+     gap: 6px !important;
+   }
+   
+   .survey-app .device-switcher button {
+     min-width: 76px !important;
+     height: 30px !important;
+     padding: 0 12px !important;
+     border-radius: 999px !important;
+     border: 1px solid #e5e7eb !important;
+     background: #ffffff !important;
+     color: #64748b !important;
+     font-size: 12px !important;
+     font-weight: 900 !important;
+   }
+   
+   .survey-app .device-switcher button.active {
+     background: var(--primary) !important;
+     border-color: var(--primary) !important;
+     color: #ffffff !important;
+   }
+   
+   /* Hide JSON bottom workspace */
+   .survey-app .bottom,
+   .survey-app .bottom.closed,
+   .survey-app .bottom-tabs,
+   .survey-app .bottom-body {
+     display: none !important;
+   }
+
+   /* =========================================================
+   Component Palette Collapsible Groups
+   Keep this below the Survey Builder Final Override
+   ========================================================= */
+
+.survey-app .palette-groups {
+  display: grid !important;
+  gap: 12px !important;
+  padding-bottom: 32px !important;
+}
+
+.survey-app .palette-category {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 16px !important;
+  background: #ffffff !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04) !important;
+}
+
+.survey-app .palette-category-head {
+  width: 100% !important;
+  height: auto !important;
+  border: 0 !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  display: grid !important;
+  grid-template-columns: 38px 1fr auto 22px !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 12px !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+.survey-app .palette-category-head:hover {
+  background: var(--accent) !important;
+}
+
+.survey-app .palette-category-icon {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 13px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: var(--accent) !important;
+  color: var(--primary) !important;
+  font-size: 15px !important;
+  font-weight: 950 !important;
+}
+
+.survey-app .palette-category-copy {
+  display: grid !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.survey-app .palette-category-copy b {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  color: #0f172a !important;
+  font-weight: 950 !important;
+}
+
+.survey-app .palette-category-copy small {
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  color: #64748b !important;
+}
+
+.survey-app .palette-category-count {
+  min-width: 24px !important;
+  height: 24px !important;
+  border-radius: 999px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+.survey-app .chevron {
+  color: #64748b !important;
+  font-weight: 900 !important;
+  transition: 0.18s ease !important;
+  transform: rotate(-90deg) !important;
+}
+
+.survey-app .chevron.open {
+  transform: rotate(0deg) !important;
+  color: var(--primary) !important;
+}
+
+.survey-app .palette-category .component-list {
+  display: grid !important;
+  gap: 8px !important;
+  padding: 0 12px 12px !important;
+}
+
+.survey-app .palette-category .component-card {
+  box-shadow: none !important;
+  background: var(--accent) !important;
+}
+
+.survey-app .palette-category .component-card:hover {
+  background: var(--accent) !important;
+}
+
+/* =========================================================
+   Right Panel Logic / Design UX Fix
+   Keep this LAST
+   ========================================================= */
+
+   .survey-app .right {
+    font-size: 13px !important;
+  }
+  
+  .survey-app .right .no-selection,
+  .survey-app .right [class*="logic"],
+  .survey-app .right [class*="Logic"] {
+    line-height: 1.55 !important;
+  }
+  
+  .survey-app .right button {
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Arial,
+      sans-serif !important;
+  }
+  
+  .survey-app .right-tabs button {
+    font-size: 13px !important;
+    font-weight: 900 !important;
+  }
+  
+  .survey-app .right-tabs button.active {
+    background: var(--accent) !important;
+  }
+  
+  .survey-app .property-tabs button {
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+  
+  .survey-app .props {
+    line-height: 1.45 !important;
+  }
+  
+  .survey-app .props label {
+    margin-bottom: 14px !important;
+  }
+  
+  .survey-app .props input,
+  .survey-app .props textarea,
+  .survey-app .props select {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+  
+  .survey-app .no-selection {
+    padding: 24px !important;
+    text-align: left !important;
+  }
+  
+  .survey-app .no-selection b {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-size: 14px !important;
+    color: #0f172a !important;
+  }
+  
+  .survey-app .no-selection span,
+  .survey-app .no-selection p {
+    display: block !important;
+    font-size: 13px !important;
+    color: #64748b !important;
+  }
+
+  /* =========================================================
+   Softer Typography for Builder
+   Keep this LAST
+   ========================================================= */
+
+.survey-app {
+  font-size: 13px !important;
+  letter-spacing: -0.01em !important;
+}
+
+.survey-app h1,
+.survey-app h2,
+.survey-app h3,
+.survey-app b,
+.survey-app label,
+.survey-app button {
+  letter-spacing: -0.015em !important;
+}
+
+.survey-app .palette-head b,
+.survey-app .rail-title,
+.survey-app .form-head h1,
+.survey-app .field label,
+.survey-app .selection b,
+.survey-app .right-tabs button,
+.survey-app .property-tabs button {
+  font-weight: 800 !important;
+}
+
+.survey-app .component-card b,
+.survey-app .palette-category-copy b {
+  font-weight: 800 !important;
+}
+
+.survey-app .component-card span,
+.survey-app .palette-category-copy small,
+.survey-app .field small,
+.survey-app .form-head p {
+  font-weight: 500 !important;
+}
+
+.survey-app .choice-option {
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   Survey Builder Responsive Fix
+   Keep this LAST
+   ========================================================= */
+
+   @media (max-width: 1100px) {
+    .survey-app .workspace {
+      grid-template-columns: 260px minmax(640px, 1fr) 320px !important;
+    }
+  
+    .survey-app .page-rail {
+      display: none !important;
+    }
+  
+    .survey-app .canvas-scroll {
+      padding: 16px !important;
+    }
+  }
+  
+  @media (max-width: 860px) {
+    .survey-app .topbar {
+      position: sticky !important;
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 12px !important;
+    }
+  
+    .survey-app .top-actions {
+      display: flex !important;
+      overflow-x: auto !important;
+      gap: 8px !important;
+      padding-bottom: 4px !important;
+    }
+  
+    .survey-app .top-actions .saved {
+      min-width: max-content !important;
+    }
+  
+    .survey-app .toolbar {
+      top: 105px !important;
+      overflow-x: auto !important;
+      padding: 8px 12px !important;
+    }
+  
+    .survey-app .workspace {
+      display: block !important;
+    }
+  
+    .survey-app .left,
+    .survey-app .right,
+    .survey-app .page-rail {
+      position: relative !important;
+      top: auto !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+  
+    .survey-app .left {
+      border-right: 0 !important;
+      border-bottom: 1px solid #e5e7eb !important;
+    }
+  
+    .survey-app .palette {
+      padding: 12px !important;
+    }
+  
+    .survey-app .palette-groups {
+      grid-template-columns: 1fr !important;
+    }
+  
+    .survey-app .canvas-head {
+      position: sticky !important;
+      top: 150px !important;
+      height: auto !important;
+      min-height: 40px !important;
+      padding: 8px 12px !important;
+    }
+  
+    .survey-app .canvas-wrap {
+      min-height: auto !important;
+    }
+  
+    .survey-app .canvas-scroll {
+      padding: 12px !important;
+    }
+  
+    .survey-app .canvas {
+      width: 100% !important;
+      min-height: auto !important;
+      transform: none !important;
+    }
+  
+    .survey-app .page-card {
+      border-radius: 14px !important;
+    }
+  
+    .survey-app .form-head,
+    .survey-app .fields,
+    .survey-app .form-footer {
+      padding: 16px !important;
+    }
+  
+    .survey-app .right {
+      border-left: 0 !important;
+      border-top: 1px solid #e5e7eb !important;
+    }
+  
+    .survey-app .right-tabs,
+    .survey-app .selection,
+    .survey-app .property-tabs {
+      position: sticky !important;
+    }
+  
+    .survey-app .right-tabs {
+      top: 0 !important;
+    }
+  
+    .survey-app .selection {
+      top: 44px !important;
+    }
+  
+    .survey-app .property-tabs {
+      top: 116px !important;
+    }
+  }
+  
+  @media (max-width: 560px) {
+    .survey-app .builder-title {
+      min-width: 0 !important;
+    }
+  
+    .survey-app .formname-input {
+      width: 100% !important;
+      min-width: 0 !important;
+      font-size: 16px !important;
+    }
+  
+    .survey-app .top-actions button,
+    .survey-app .top-actions a {
+      min-width: max-content !important;
+    }
+  
+    .survey-app .toolbar {
+      top: 118px !important;
+    }
+  
+    .survey-app .toolset,
+    .survey-app .viewtools {
+      min-width: max-content !important;
+    }
+  
+    .survey-app .palette-category-head {
+      grid-template-columns: 36px 1fr auto 18px !important;
+    }
+  
+    .survey-app .component-card {
+      min-height: 58px !important;
+    }
+  
+    .survey-app .field {
+      padding: 10px !important;
+    }
+  
+    .survey-app .geo-capture {
+      grid-template-columns: 1fr !important;
+    }
+  
+    .survey-app .money-control {
+      min-height: 40px !important;
+    }
+  
+    .survey-app .right {
+      margin-top: 12px !important;
+    }
+  }
+
+  /* =========================================================
+   Reduce Outer Builder Spacing
+   Keep this LAST
+   ========================================================= */
+
+.survey-app {
+  margin-top: 0 !important;
+}
+
+.survey-app .topbar {
+  margin-top: 0 !important;
+}
+
+.survey-app .canvas-scroll {
+  background: #eef2f7 !important;
+}
+
+/* Removes extra visual heaviness around the builder */
+.survey-app .canvas-wrap {
+  background: #eef2f7 !important;
+}
+
+.survey-app .page-card {
+  margin-top: 0 !important;
+}
+
+/* =========================================================
+   Logic Panel Add Rule Button
+   Keep this LAST
+   ========================================================= */
+
+   .survey-app .logic-add-button {
+    width: 100% !important;
+    min-height: 44px !important;
+    margin: 14px 0 18px !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, var(--primary), var(--primary)) !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    box-shadow: 0 12px 26px rgba(23, 102, 91, 0.22) !important;
+    transition: 0.16s ease !important;
+  }
+  
+  .survey-app .logic-add-button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 16px 32px rgba(23, 102, 91, 0.28) !important;
+  }
+  
+  .survey-app .logic-add-button:active {
+    transform: translateY(0) !important;
+  }
+  
+  .survey-app .logic-add-button::before {
+    content: "+" !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 999px !important;
+    display: grid !important;
+    place-items: center !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 950 !important;
+  }
