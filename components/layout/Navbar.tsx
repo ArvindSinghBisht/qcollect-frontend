@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -114,12 +115,14 @@ export default function Navbar() {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-64">
-              <DropdownMenuLabel>
-                <div className="font-semibold text-slate-900 dark:text-white">{user?.firstName || "QCollect User"}</div>
-                <div className="mt-1 truncate text-xs font-normal text-slate-500">{user?.email}</div>
-                <div className="mt-1 text-xs font-bold text-teal-600">{roleLabel(role)}</div>
-                {selectedProjectName ? <div className="mt-1 truncate text-xs font-semibold text-slate-500">{selectedProjectName}</div> : null}
-              </DropdownMenuLabel>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>
+                  <div className="font-semibold text-slate-900 dark:text-white">{user?.firstName || "QCollect User"}</div>
+                  <div className="mt-1 truncate text-xs font-normal text-slate-500">{user?.email}</div>
+                  <div className="mt-1 text-xs font-bold text-teal-600">{roleLabel(role)}</div>
+                  {selectedProjectName ? <div className="mt-1 truncate text-xs font-semibold text-slate-500">{selectedProjectName}</div> : null}
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
               <DropdownMenuSeparator />
               {canSwitchProject ? (
                 <Link href="/select-project"><DropdownMenuItem><Repeat2 className="h-4 w-4" /> Switch Project</DropdownMenuItem></Link>
