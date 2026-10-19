@@ -35,7 +35,18 @@ export default function ProjectDetailsPage() {
       const response = await getProject(projectId);
       const data = unwrapApiData<Project | null>(response, null);
       setProject(data);
-      if (data) setSelectedProject({ id: data.id, name: data.name });
+      if (data) {
+        const membership = useAuthStore
+          .getState()
+          .user?.projects?.find(
+            (item) => item.projectId === data.id || item.projectId === projectId
+          );
+        setSelectedProject({
+          id: data.id,
+          name: data.name,
+          role: membership?.role,
+        });
+      }
     } catch (error) {
       console.error(error);
       toast.error("Failed to load project");

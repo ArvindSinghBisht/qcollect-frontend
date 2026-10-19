@@ -34,7 +34,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      await loginUser(data.email, data.password);
+      await loginUser(data.email, data.password, selected);
       toast.success("Login successful");
     } catch (error) {
       console.error("Login error:", error);

@@ -102,13 +102,23 @@ export const useAuthStore = create<AuthState>()(
       setSelectedProject: (project) => {
         const projectId = getProjectId(project);
         const projectName = getProjectName(project);
-        const projectRole = project?.role?.toString() || null;
+        const incomingRole = project?.role?.toString() || null;
 
-        set({
-          selectedProject: project,
-          selectedProjectId: projectId,
-          selectedProjectName: projectName,
-          selectedProjectRole: projectRole,
+        set((state) => {
+          const sameProject = Boolean(
+            projectId && projectId === state.selectedProjectId
+          );
+          const projectRole =
+            incomingRole || (sameProject ? state.selectedProjectRole : null);
+
+          return {
+            selectedProject: project
+              ? { ...project, role: projectRole }
+              : null,
+            selectedProjectId: projectId,
+            selectedProjectName: projectName,
+            selectedProjectRole: projectRole,
+          };
         });
       },
 

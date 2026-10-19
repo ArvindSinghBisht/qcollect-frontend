@@ -3,12 +3,13 @@
 import { useRouter } from "next/navigation";
 
 import { login } from "@/services/auth.service";
-import { saveToken } from "@/utils/cookies";
+import { removeToken, saveToken } from "@/utils/cookies";
 import { useAuthStore } from "@/store/auth.store";
 import {
   dashboardPathForRole,
   normalizeRole,
   projectWorkspacePath,
+  roleLabel,
 } from "@/lib/flow";
 import type { AuthUser, ProjectMembership } from "@/types/auth";
 
@@ -25,8 +26,9 @@ export function useAuth() {
   const clearSelectedProject = useAuthStore(
     (state) => state.clearSelectedProject
   );
+  const logout = useAuthStore((state) => state.logout);
 
-  async function loginUser(email: string, password: string) {
+  async function loginUser(email: string, password: string, selectedRole?: string) {
     const result = await login({
       email: email.trim(),
       password,
@@ -67,6 +69,33 @@ export function useAuth() {
     setRole(systemRole);
 
     const normalizedSystemRole = normalizeRole(systemRole);
+    const chosenRole = normalizeRole(selectedRole);
+    const isProjectRole =
+      chosenRole === "PROJECT_ADMIN" ||
+      chosenRole === "ACCESSOR" ||
+      chosenRole === "QUALITY_CHECKER";
+
+    /*
+     * Project Admin, Accessor, and Quality Checker are memberships on a
+     * tenant project. The account's system role stays USER, so the role
+     * chosen on the login screen has to pick the matching membership.
+     */
+    if (isProjectRole) {
+      const matches = projects.filter(
+        (project) => normalizeRole(project.role) === chosenRole
+      );
+
+      if (matches.length === 0) {
+        removeToken();
+        logout();
+        throw new Error(
+          `This account is not a ${roleLabel(chosenRole)} on a project in this tenant.`
+        );
+      }
+
+      openProjectMemberships(user, matches);
+      return;
+    }
 
     /*
      * USER accounts receive their actual role from projects[].
@@ -74,24 +103,7 @@ export function useAuth() {
      * must first go through the project-selection page.
      */
     if (normalizedSystemRole === "USER") {
-      if (projects.length === 1) {
-        const project = projects[0];
-
-        setSelectedProject({
-          projectId: project.projectId,
-          projectName: project.projectName || project.name || null,
-          role: project.role,
-        });
-
-        router.replace(
-          projectWorkspacePath(project.role, project.projectId)
-        );
-      } else {
-        clearSelectedProject();
-        router.replace("/select-project");
-      }
-
-      router.refresh();
+      openProjectMemberships(user, projects);
       return;
     }
 
@@ -102,6 +114,30 @@ export function useAuth() {
      */
     clearSelectedProject();
     router.replace(dashboardPathForRole(normalizedSystemRole));
+    router.refresh();
+  }
+
+  function openProjectMemberships(user: AuthUser, memberships: ProjectMembership[]) {
+    if (memberships.length === 1) {
+      const project = memberships[0];
+
+      setUser({ ...user, projects: memberships });
+      setSelectedProject({
+        projectId: project.projectId,
+        projectName: project.projectName || project.name || null,
+        role: project.role,
+      });
+
+      router.replace(
+        projectWorkspacePath(project.role, project.projectId)
+      );
+      router.refresh();
+      return;
+    }
+
+    setUser({ ...user, projects: memberships });
+    clearSelectedProject();
+    router.replace(memberships.length ? "/select-project" : dashboardPathForRole("USER"));
     router.refresh();
   }
 
