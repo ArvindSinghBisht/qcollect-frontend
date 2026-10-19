@@ -85,16 +85,25 @@ export function useAuth() {
         (project) => normalizeRole(project.role) === chosenRole
       );
 
-      if (matches.length === 0) {
-        removeToken();
-        logout();
-        throw new Error(
-          `This account is not a ${roleLabel(chosenRole)} on a project in this tenant.`
-        );
+      if (matches.length > 0) {
+        openProjectMemberships(user, matches);
+        return;
       }
 
-      openProjectMemberships(user, matches);
-      return;
+      /*
+       * A tenant admin has no project-admin membership. Selecting Project
+       * Admin still has to open that tenant's workspace.
+       */
+      if (chosenRole === "PROJECT_ADMIN" && normalizedSystemRole === "TENANT_ADMIN") {
+        clearSelectedProject();
+        router.replace(dashboardPathForRole("TENANT_ADMIN"));
+        router.refresh();
+        return;
+      }
+
+      removeToken();
+      logout();
+      throw new Error(signInRoleHint(normalizedSystemRole, projects, chosenRole));
     }
 
     /*
@@ -144,4 +153,33 @@ export function useAuth() {
   return {
     loginUser,
   };
+}
+
+function signInRoleHint(
+  systemRole: ReturnType<typeof normalizeRole>,
+  projects: ProjectMembership[],
+  chosenRole: ReturnType<typeof normalizeRole>
+): string {
+  if (systemRole === "SUPER_ADMIN") {
+    return "This account is a Super Admin. Select Super Admin to sign in.";
+  }
+
+  if (systemRole === "TENANT_ADMIN") {
+    return "This account is a Tenant Admin. Select Tenant Admin to open the tenant workspace.";
+  }
+
+  const available = Array.from(
+    new Set(
+      projects
+        .map((project) => normalizeRole(project.role))
+        .filter((role): role is NonNullable<typeof role> => Boolean(role))
+        .map((role) => roleLabel(role))
+    )
+  );
+
+  if (available.length > 0) {
+    return `This account is not a ${roleLabel(chosenRole)}. Select ${available.join(" or ")} to sign in.`;
+  }
+
+  return `This account is not a ${roleLabel(chosenRole)}. Select the role that matches this account.`;
 }
