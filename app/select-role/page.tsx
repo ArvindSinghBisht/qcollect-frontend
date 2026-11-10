@@ -53,9 +53,9 @@ export default function SelectRolePage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Role Context"
-        title="Which role do you want to log in as?"
-        description="Your account has more than one project role. Choose one to continue. If that role covers several projects, you will pick the project next."
+        eyebrow="Your account"
+        title="Choose your role"
+        description="This account has more than one role. Pick which one you want to use for this session."
       />
 
       {roles.length ? (

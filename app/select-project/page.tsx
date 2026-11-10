@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FolderKanban, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/common/PageHeader";
 import { EmptyState } from "@/components/common/State";
 import { RoleBadge } from "@/components/common/RoleBadge";
-import { projectWorkspacePath, roleLabel } from "@/lib/flow";
+import {
+  distinctMultiRoles,
+  projectWorkspacePath,
+  roleLabel,
+} from "@/lib/flow";
 import { useAuthStore } from "@/store/auth.store";
 import type { ProjectMembership } from "@/types/auth";
 
@@ -17,6 +22,18 @@ export default function SelectProjectPage() {
   const selectedProjectId = useAuthStore((state) => state.selectedProjectId);
   const setSelectedProject = useAuthStore((state) => state.setSelectedProject);
   const projects = user?.projects || [];
+  const roles = distinctMultiRoles(projects);
+  const sessionRole = roles.length === 1 ? roles[0] : null;
+
+  /*
+   * Role must be chosen first when Acc / QC / PA are mixed. Landing here with
+   * multiple distinct roles (sidebar shortcut, stale link) goes back to /select-role.
+   */
+  useEffect(() => {
+    if (roles.length > 1) {
+      router.replace("/select-role");
+    }
+  }, [roles.length, router]);
 
   function openProject(project: ProjectMembership) {
     setSelectedProject({
@@ -24,17 +41,27 @@ export default function SelectProjectPage() {
       projectName: project.projectName,
       role: project.role,
     });
-  
+
     router.replace(projectWorkspacePath(project.role, project.projectId));
     router.refresh();
   }
 
+  if (roles.length > 1) {
+    return null;
+  }
+
+  const roleName = sessionRole ? roleLabel(sessionRole) : null;
+
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Project Context"
-        title="Select Project"
-        description="Your login can contain multiple project roles. Select one project to set X-Project-Id and open the correct workspace."
+        eyebrow="Your workspace"
+        title="Choose a project"
+        description={
+          roleName
+            ? `You are continuing as ${roleName}. Pick which project workspace to use for this session.`
+            : "Pick which project workspace to use for this session."
+        }
       />
 
       {projects.length ? (
@@ -42,12 +69,17 @@ export default function SelectProjectPage() {
           {projects.map((project) => {
             const active = selectedProjectId === project.projectId;
             return (
-              <Card key={`${project.projectId}-${project.role}`} className={`rounded-xl transition hover:-translate-y-0.5 hover:shadow-sm ${active ? "border-teal-500 ring-2 ring-teal-200" : ""}`}>
+              <Card
+                key={`${project.projectId}-${project.role}`}
+                className={`rounded-xl transition hover:-translate-y-0.5 hover:shadow-sm ${active ? "border-teal-500 ring-2 ring-teal-200" : ""}`}
+              >
                 <CardHeader>
                   <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-teal-50 text-teal-600 dark:bg-teal-500/10">
                     <FolderKanban className="h-5 w-5" />
                   </div>
-                  <CardTitle className="line-clamp-2">{project.projectName || project.name || project.projectId}</CardTitle>
+                  <CardTitle className="line-clamp-2">
+                    {project.projectName || project.name || project.projectId}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-2">
@@ -55,9 +87,14 @@ export default function SelectProjectPage() {
                     <span className="text-sm font-bold text-slate-500">Role:</span>
                     <RoleBadge role={project.role} />
                   </div>
-                  <p className="break-all text-xs text-slate-400">{project.projectId}</p>
-                  <Button className="w-full rounded-lg font-semibold" onClick={() => openProject(project)}>
-                    {active ? `Continue as ${roleLabel(project.role)}` : `Open ${roleLabel(project.role)} Workspace`}
+                  <p className="break-all text-xs text-slate-400">
+                    {project.projectId}
+                  </p>
+                  <Button
+                    className="w-full rounded-lg font-semibold"
+                    onClick={() => openProject(project)}
+                  >
+                    {active ? "Continue in this project" : "Open workspace"}
                   </Button>
                 </CardContent>
               </Card>
@@ -69,7 +106,7 @@ export default function SelectProjectPage() {
           <CardContent className="p-6">
             <EmptyState
               title="No project memberships found"
-              description="Your login succeeded, but backend did not return any projects[] membership. Ask Tenant Admin or Project Admin to add this user to a project."
+              description="Your login succeeded, but this account is not assigned to any project yet. Ask a Tenant Admin or Project Admin to add you."
             />
           </CardContent>
         </Card>
