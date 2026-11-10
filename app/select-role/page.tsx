@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { ClipboardCheck, ShieldCheck, UserCheck } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -41,24 +40,6 @@ export default function SelectRolePage() {
   const projects = user?.projects || [];
   const roles = distinctMultiRoles(projects);
 
-  const soleRole = roles.length === 1 ? roles[0] : null;
-
-  /*
-   * Single-role accounts should not linger here — continue into the project
-   * picker or workspace for that role (covers direct /select-role visits).
-   */
-  useEffect(() => {
-    if (!soleRole) return;
-
-    try {
-      continueWithProjectRole(soleRole);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Could not open that role."
-      );
-    }
-  }, [soleRole, continueWithProjectRole]);
-
   function chooseRole(role: MultiRoleProjectRole) {
     try {
       continueWithProjectRole(role);
@@ -67,10 +48,6 @@ export default function SelectRolePage() {
         error instanceof Error ? error.message : "Could not open that role."
       );
     }
-  }
-
-  if (soleRole) {
-    return null;
   }
 
   return (
