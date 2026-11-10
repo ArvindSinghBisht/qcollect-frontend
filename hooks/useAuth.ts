@@ -7,9 +7,10 @@ import { removeToken, saveToken } from "@/utils/cookies";
 import { useAuthStore } from "@/store/auth.store";
 import {
   dashboardPathForRole,
+  distinctMultiRoles,
+  isMultiRoleProjectRole,
   normalizeRole,
   projectWorkspacePath,
-  roleLabel,
 } from "@/lib/flow";
 import type { AuthUser, ProjectMembership } from "@/types/auth";
 
@@ -28,7 +29,7 @@ export function useAuth() {
   );
   const logout = useAuthStore((state) => state.logout);
 
-  async function loginUser(email: string, password: string, selectedRole?: string) {
+  async function loginUser(email: string, password: string) {
     const result = await login({
       email: email.trim(),
       password,
@@ -69,64 +70,68 @@ export function useAuth() {
     setRole(systemRole);
 
     const normalizedSystemRole = normalizeRole(systemRole);
-    const chosenRole = normalizeRole(selectedRole);
-    const isProjectRole =
-      chosenRole === "PROJECT_ADMIN" ||
-      chosenRole === "ACCESSOR" ||
-      chosenRole === "QUALITY_CHECKER";
 
     /*
-     * Project Admin, Accessor, and Quality Checker are memberships on a
-     * tenant project. The account's system role stays USER, so the role
-     * chosen on the login screen has to pick the matching membership.
+     * Super Admin and Tenant Admin are single-email system roles.
+     * They never enter the Acc / QC / PA multi-role chooser, even if the
+     * account also has project memberships (Tenant Admin boundary case).
      */
-    if (isProjectRole) {
-      const matches = projects.filter(
-        (project) => normalizeRole(project.role) === chosenRole
-      );
-
-      if (matches.length > 0) {
-        openProjectMemberships(user, matches);
-        return;
-      }
-
-      /*
-       * A tenant admin has no project-admin membership. Selecting Project
-       * Admin still has to open that tenant's workspace.
-       */
-      if (chosenRole === "PROJECT_ADMIN" && normalizedSystemRole === "TENANT_ADMIN") {
-        clearSelectedProject();
-        router.replace(dashboardPathForRole("TENANT_ADMIN"));
-        router.refresh();
-        return;
-      }
-
-      removeToken();
-      logout();
-      throw new Error(signInRoleHint(normalizedSystemRole, projects, chosenRole));
-    }
-
-    /*
-     * USER accounts receive their actual role from projects[].
-     * A single membership can be opened directly. Multiple memberships
-     * must first go through the project-selection page.
-     */
-    if (normalizedSystemRole === "USER") {
-      openProjectMemberships(user, projects);
+    if (
+      normalizedSystemRole === "SUPER_ADMIN" ||
+      normalizedSystemRole === "TENANT_ADMIN"
+    ) {
+      clearSelectedProject();
+      router.replace(dashboardPathForRole(normalizedSystemRole));
+      router.refresh();
       return;
     }
 
     /*
-     * System-level and legacy direct-role accounts must also be redirected.
-     * Previously there was no redirect outside the USER block, so the login
-     * page stayed visible even after a successful response.
+     * USER accounts: if they hold more than one distinct Acc / QC / PA role,
+     * ask which role to use. Otherwise open that role (project picker when
+     * the role has multiple projects).
      */
+    if (normalizedSystemRole === "USER") {
+      routeUserMemberships(user, projects);
+      return;
+    }
+
     clearSelectedProject();
     router.replace(dashboardPathForRole(normalizedSystemRole));
     router.refresh();
   }
 
-  function openProjectMemberships(user: AuthUser, memberships: ProjectMembership[]) {
+  function routeUserMemberships(
+    user: AuthUser,
+    memberships: ProjectMembership[]
+  ) {
+    const roles = distinctMultiRoles(memberships);
+
+    if (roles.length > 1) {
+      setUser({ ...user, projects: memberships });
+      clearSelectedProject();
+      router.replace("/select-role");
+      router.refresh();
+      return;
+    }
+
+    if (roles.length === 1) {
+      openProjectMemberships(
+        user,
+        memberships.filter(
+          (project) => normalizeRole(project.role) === roles[0]
+        )
+      );
+      return;
+    }
+
+    openProjectMemberships(user, memberships);
+  }
+
+  function openProjectMemberships(
+    user: AuthUser,
+    memberships: ProjectMembership[]
+  ) {
     if (memberships.length === 1) {
       const project = memberships[0];
 
@@ -137,49 +142,49 @@ export function useAuth() {
         role: project.role,
       });
 
-      router.replace(
-        projectWorkspacePath(project.role, project.projectId)
-      );
+      router.replace(projectWorkspacePath(project.role, project.projectId));
       router.refresh();
       return;
     }
 
     setUser({ ...user, projects: memberships });
     clearSelectedProject();
-    router.replace(memberships.length ? "/select-project" : dashboardPathForRole("USER"));
+    router.replace(
+      memberships.length ? "/select-project" : dashboardPathForRole("USER")
+    );
     router.refresh();
+  }
+
+  /**
+   * Continue after the post-auth role chooser. Filters memberships to the
+   * chosen Acc / QC / PA role, then opens the workspace or project picker.
+   */
+  function continueWithProjectRole(role: string) {
+    if (!isMultiRoleProjectRole(role)) {
+      throw new Error("Choose Accessor, Quality Checker, or Project Admin.");
+    }
+
+    const user = useAuthStore.getState().user;
+    if (!user) {
+      removeToken();
+      logout();
+      router.replace("/login");
+      return;
+    }
+
+    const memberships = (user.projects || []).filter(
+      (project) => normalizeRole(project.role) === role
+    );
+
+    if (!memberships.length) {
+      throw new Error("This account does not have that project role.");
+    }
+
+    openProjectMemberships(user, memberships);
   }
 
   return {
     loginUser,
+    continueWithProjectRole,
   };
-}
-
-function signInRoleHint(
-  systemRole: ReturnType<typeof normalizeRole>,
-  projects: ProjectMembership[],
-  chosenRole: ReturnType<typeof normalizeRole>
-): string {
-  if (systemRole === "SUPER_ADMIN") {
-    return "This account is a Super Admin. Select Super Admin to sign in.";
-  }
-
-  if (systemRole === "TENANT_ADMIN") {
-    return "This account is a Tenant Admin. Select Tenant Admin to open the tenant workspace.";
-  }
-
-  const available = Array.from(
-    new Set(
-      projects
-        .map((project) => normalizeRole(project.role))
-        .filter((role): role is NonNullable<typeof role> => Boolean(role))
-        .map((role) => roleLabel(role))
-    )
-  );
-
-  if (available.length > 0) {
-    return `This account is not a ${roleLabel(chosenRole)}. Select ${available.join(" or ")} to sign in.`;
-  }
-
-  return `This account is not a ${roleLabel(chosenRole)}. Select the role that matches this account.`;
 }

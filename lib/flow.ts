@@ -46,6 +46,45 @@ export function normalizeRole(role?: string | null): UserRole | null {
   }
 }
 
+/** Acc / QC / PA — the only roles that participate in multi-role login. */
+export const MULTI_ROLE_PROJECT_ROLES = [
+  "ACCESSOR",
+  "QUALITY_CHECKER",
+  "PROJECT_ADMIN",
+] as const;
+
+export type MultiRoleProjectRole = (typeof MULTI_ROLE_PROJECT_ROLES)[number];
+
+export function isMultiRoleProjectRole(
+  role?: string | null
+): role is MultiRoleProjectRole {
+  const value = normalizeRole(role);
+  return (
+    value === "ACCESSOR" ||
+    value === "QUALITY_CHECKER" ||
+    value === "PROJECT_ADMIN"
+  );
+}
+
+/**
+ * Distinct Acc / QC / PA roles present in memberships, in stable UI order.
+ * Super Admin and Tenant Admin never appear here.
+ */
+export function distinctMultiRoles(
+  projects: { role?: string | null }[] | null | undefined
+): MultiRoleProjectRole[] {
+  const found = new Set<MultiRoleProjectRole>();
+
+  for (const project of projects || []) {
+    const role = normalizeRole(project.role);
+    if (isMultiRoleProjectRole(role)) {
+      found.add(role);
+    }
+  }
+
+  return MULTI_ROLE_PROJECT_ROLES.filter((role) => found.has(role));
+}
+
 export function getEffectiveRole(
   systemRole?: string | null,
   selectedProjectRole?: string | null
