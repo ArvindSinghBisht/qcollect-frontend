@@ -18,12 +18,14 @@ export default function Sidebar() {
   const selectedProjectId = useAuthStore((state) => state.selectedProjectId);
   const role = getEffectiveRole(systemRole, selectedProjectRole) || systemRole;
   const logout = useAuthStore((state) => state.logout);
-  const menus = menusForRole(role).map((menu) =>
+  const menus = menusForRole(role, user?.projects).map((menu) =>
     menu.title === "Project" && selectedProjectId && role === "PROJECT_ADMIN"
       ? { ...menu, href: `/projects/${selectedProjectId}` }
       : menu
   );
-  const canSwitchProject = (user?.projects?.length || 0) > 1;
+  const canSwitchProject =
+    (user?.projects?.length || 0) > 1 &&
+    Boolean(selectedProjectId || selectedProjectRole);
 
   function handleLogout() {
     removeToken();

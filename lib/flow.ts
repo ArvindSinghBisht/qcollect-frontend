@@ -136,7 +136,7 @@ export function dashboardPathForRole(role?: string | null): string {
       return "/projects";
 
     case "USER":
-      return "/select-project";
+      return "/select-role";
 
     case "PROJECT_ADMIN":
       return "/projects";
@@ -166,7 +166,7 @@ export function projectWorkspacePath(role?: string | null, projectId?: string | 
       return "/submissions/pending";
 
     default:
-      return "/select-project";
+      return "/select-role";
   }
 }
 
@@ -194,7 +194,34 @@ export function roleAccent(role?: string | null): string {
   }
 }
 
-export function menusForRole(role?: string | null): SidebarMenuItem[] {
+/**
+ * Sidebar for the post-login chooser (no Acc / QC / PA selected yet).
+ * Role-first when the account has more than one distinct project role.
+ */
+export function chooserMenuItem(
+  projects?: { role?: string | null }[] | null
+): SidebarMenuItem {
+  const roles = distinctMultiRoles(projects);
+
+  if (roles.length > 1) {
+    return {
+      title: "Choose your role",
+      href: "/select-role",
+      icon: ShieldCheck,
+    };
+  }
+
+  return {
+    title: "Choose a project",
+    href: "/select-project",
+    icon: FolderKanban,
+  };
+}
+
+export function menusForRole(
+  role?: string | null,
+  projects?: { role?: string | null }[] | null
+): SidebarMenuItem[] {
   const value = normalizeRole(role);
 
   const common: SidebarMenuItem[] = [
@@ -320,14 +347,7 @@ export function menusForRole(role?: string | null): SidebarMenuItem[] {
     ];
   }
 
-  return [
-    {
-      title: "Select Project",
-      href: "/select-project",
-      icon: FolderKanban,
-    },
-    ...common,
-  ];
+  return [chooserMenuItem(projects), ...common];
 }
 
 export const flowSteps = [
@@ -341,7 +361,7 @@ export const flowSteps = [
   },
   {
     role: "User",
-    action: "Select project, then work as Project Admin, Accessor or Quality Checker",
+    action: "Choose your role, then a project if needed",
   },
   {
     role: "Accessor",

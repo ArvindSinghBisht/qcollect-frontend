@@ -20,7 +20,8 @@ import { useAuthStore } from "@/store/auth.store";
 import { getEffectiveRole, menusForRole, roleLabel } from "@/lib/flow";
 
 function getPageTitle(pathname: string) {
-  if (pathname.startsWith("/select-project")) return "Select Project";
+  if (pathname.startsWith("/select-role")) return "Choose your role";
+  if (pathname.startsWith("/select-project")) return "Choose a project";
   if (pathname.startsWith("/tenants")) return "Tenants";
   if (pathname.startsWith("/dashboard")) return "Dashboard";
   if (pathname.startsWith("/projects")) return "Projects";
@@ -41,9 +42,12 @@ export default function Navbar() {
   const systemRole = useAuthStore((state) => state.systemRole || state.user?.systemRole || state.user?.role);
   const selectedProjectRole = useAuthStore((state) => state.selectedProjectRole);
   const selectedProjectName = useAuthStore((state) => state.selectedProjectName);
+  const selectedProjectId = useAuthStore((state) => state.selectedProjectId);
   const role = getEffectiveRole(systemRole, selectedProjectRole) || systemRole;
   const logout = useAuthStore((state) => state.logout);
-  const canSwitchProject = (user?.projects?.length || 0) > 1;
+  const canSwitchProject =
+    (user?.projects?.length || 0) > 1 &&
+    Boolean(selectedProjectId || selectedProjectRole);
 
   const initials = `${user?.firstName?.[0] || "U"}${user?.lastName?.[0] || ""}`.toUpperCase();
 
@@ -136,7 +140,7 @@ export default function Navbar() {
         </div>
       </div>
       {mobileOpen ? <nav id="mobile-navigation" className="mobile-navigation lg:hidden" aria-label="Workspace navigation">
-        {menusForRole(role).map((menu) => <Link key={menu.href} href={menu.href} onClick={() => setMobileOpen(false)} aria-current={pathname === menu.href || pathname.startsWith(`${menu.href}/`) ? "page" : undefined}><menu.icon className="h-4 w-4" />{menu.title}</Link>)}
+        {menusForRole(role, user?.projects).map((menu) => <Link key={menu.href} href={menu.href} onClick={() => setMobileOpen(false)} aria-current={pathname === menu.href || pathname.startsWith(`${menu.href}/`) ? "page" : undefined}><menu.icon className="h-4 w-4" />{menu.title}</Link>)}
       </nav> : null}
     </header>
   );
